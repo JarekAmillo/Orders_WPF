@@ -38,8 +38,8 @@
         <TextBox Grid.Row="5" Grid.Column="1" Margin="5"/>
 
         <StackPanel Orientation="Horizontal" Grid.Row="6" Grid.Column="1" HorizontalAlignment="Right">
-            <Button Content="Anuluj" Margin="5" Width="100" Background="PaleVioletRed"/>
-            <Button Content="Zapisz" Margin="5" Width="100" Background="LawnGreen"/>
+            <Button Content="Anuluj" Margin="5" Width="100" Background="PaleVioletRed" FontWeight="Bold"/>
+            <Button Content="Zapisz" Margin="5" Width="100" Background="LawnGreen" FontWeight="Bold"/>
 
         </StackPanel>
 
