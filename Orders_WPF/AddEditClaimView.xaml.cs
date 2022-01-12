@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MahApps.Metro.Controls;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,7 +18,7 @@ namespace Orders_WPF
     /// <summary>
     /// Interaction logic for AddEditClaimView.xaml
     /// </summary>
-    public partial class AddEditClaimView : Window
+    public partial class AddEditClaimView : MetroWindow
     {
         public AddEditClaimView()
         {
