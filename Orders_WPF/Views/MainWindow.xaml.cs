@@ -1,4 +1,5 @@
 ﻿using MahApps.Metro.Controls;
+using Claims_WPF.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Orders_WPF
+namespace Claims_WPF.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -24,6 +25,7 @@ namespace Orders_WPF
         public MainWindow()
         {
             InitializeComponent();
+            DataContext = new MainViewModel();
         }
 
 

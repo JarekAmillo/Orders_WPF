@@ -1,0 +1,79 @@
+﻿<mah:MetroWindow x:Class="Claims_WPF.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mah="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Orders_WPF"
+        mc:Ignorable="d"
+        WindowStartupLocation="CenterScreen"
+        Title="Ordes_WPF" Height="450" Width="800">
+        
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height= "Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Orientation="Horizontal">
+
+            <Button Command="{Binding AddTaskCommand}" 
+                    Content="Dodaj" 
+                    Height="25" 
+                    Width="100" 
+                    Margin="5" 
+                    Background="LawnGreen"/>
+
+            <Button Command="{Binding EditTaskCommand}" 
+                    CommandParameter="{Binding SelectedTask}"
+                    Content="Edytuj" 
+                    Height="25" 
+                    Width="100" 
+                    Margin="5" 
+                    Background="Yellow"/>
+
+            <Button Command="{Binding DeleteTaskCommand}" 
+                    Content="Usuń" 
+                    Height="25" 
+                    Width="100" 
+                    Margin="5" 
+                    Background="PaleVioletRed"/>
+            
+            <ComboBox 
+                Height="26" 
+                Width="150" 
+                Margin="5"
+                ItemsSource="{Binding TypeOfTasks}"
+                SelectedValue="{Binding SelectedTypeId}"
+                DisplayMemberPath="Name"
+                SelectedValuePath="Id"
+                />
+
+            <Button Command="{Binding RefreshTaskCommand}" 
+                    Content="Odśwież" 
+                    Height="25" 
+                    Width="100" 
+                    Margin="5"/>
+        </StackPanel>
+        <DataGrid 
+            Grid.Row="1" 
+            Margin="5"
+            ItemsSource="{Binding Task}"
+            SelectedItem="{Binding SelectedTask}"
+            CanUserAddRows="False"
+            IsReadOnly="True"
+            SelectionMode="Single"
+            AutoGenerateColumns="False">
+            <DataGrid.Columns>
+                <DataGridTextColumn Binding="{Binding Id}" Visibility="Hidden"/>
+                <DataGridTextColumn Binding="{Binding ClaimNumber}" Header="Numer szkody"/>
+                <DataGridTextColumn Binding="{Binding TaskNumber}" Header="Numer zlecenia"/>
+                <DataGridTextColumn Binding="{Binding TypeOfTask.Name}" Header="Typ zlecenia"/>
+                <DataGridTextColumn Binding="{Binding DateToRegisterTheClaim}" Header="Data"/>
+                <DataGridTextColumn Binding="{Binding Comments}" 
+                Width="250"
+                Header="Zapiski"/>
+                
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</mah:MetroWindow>
