@@ -1,5 +1,6 @@
 ﻿using Claims_WPF.Commands;
 using Claims_WPF.Models;
+using Claims_WPF.Models.Wrappers;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,7 +14,7 @@ namespace Claims_WPF.ViewModels
 {
     class AddEditClaimViewModel :ViewModelBase
     {
-        public AddEditClaimViewModel(Claim claim = null)
+        public AddEditClaimViewModel(ClaimWrapper claim = null)
         {
             CloseCommand = new RelayCommand(Close, null);
             ConfirmCommand = new RelayCommand(Confirm, null);
@@ -21,26 +22,23 @@ namespace Claims_WPF.ViewModels
 
             if (claim == null)
             {
-                Claim = new Claim();
+                Claim = new ClaimWrapper();
             }
             else
             {
                 Claim = claim;
                 IsUpdate = true;
             }
-
+            
         }
 
 
-
         public ICommand CloseCommand { get; set; }
-
-
         public ICommand ConfirmCommand { get; set; }
 
 
-        private Claim _claim;
-        public Claim Claim
+        private ClaimWrapper _claim;
+        public ClaimWrapper Claim
         {
             get { return _claim; }
             set 
@@ -73,8 +71,8 @@ namespace Claims_WPF.ViewModels
             }
         }
 
-        private ObservableCollection<TypeOfTask> _typeOfTasks;
-        public ObservableCollection<TypeOfTask> TypeOfTasks
+        private ObservableCollection<TypeOfTaskWrapper> _typeOfTasks;
+        public ObservableCollection<TypeOfTaskWrapper> TypeOfTasks
         {
             get { return _typeOfTasks; }
             set
@@ -84,20 +82,11 @@ namespace Claims_WPF.ViewModels
             }
         }
 
-
-
-
-
-
-
-
-
-
         private void Confirm(object obj)
         {
             if (!IsUpdate)
             {
-                AddStudent();
+                AddClaim();
             }
             else
             {
@@ -113,7 +102,7 @@ namespace Claims_WPF.ViewModels
             //baza danych
         }
 
-        private void AddStudent()
+        private void AddClaim()
         {
             //baza danych
         }
@@ -131,15 +120,15 @@ namespace Claims_WPF.ViewModels
 
         private void InitTypeOfTasks()
         {
-            TypeOfTasks = new ObservableCollection<TypeOfTask>
+            TypeOfTasks = new ObservableCollection<TypeOfTaskWrapper>
             {
-            new TypeOfTask { Id = 0, Name = "-- brak --"},
-            new TypeOfTask { Id = 1, Name = "Typ C"},
-            new TypeOfTask { Id = 2, Name = "Typ C1"},
-            new TypeOfTask { Id = 3, Name = "Typ C2"},
-            new TypeOfTask { Id = 4, Name = "Typ D2"}
+            new TypeOfTaskWrapper { Id = 0, Name = "-- brak --"},
+            new TypeOfTaskWrapper { Id = 1, Name = "Typ C"},
+            new TypeOfTaskWrapper { Id = 2, Name = "Typ C1"},
+            new TypeOfTaskWrapper { Id = 3, Name = "Typ C2"},
+            new TypeOfTaskWrapper { Id = 4, Name = "Typ D2"}
             };
-            Claim.TypeOfTask.Id = 0;
+            SelectedTypeId = 0;
         }
     }
 }

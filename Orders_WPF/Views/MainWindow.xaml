@@ -57,8 +57,8 @@
         <DataGrid 
             Grid.Row="1" 
             Margin="5"
-            ItemsSource="{Binding Task}"
-            SelectedItem="{Binding SelectedTask}"
+            ItemsSource="{Binding Claims}"
+            SelectedItem="{Binding SelectedClaim}"
             CanUserAddRows="False"
             IsReadOnly="True"
             SelectionMode="Single"

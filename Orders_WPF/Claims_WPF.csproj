@@ -87,8 +87,12 @@
     <Compile Include="ApplicationDbContext.cs" />
     <Compile Include="Commands\AsyncRelayCommand.cs" />
     <Compile Include="Commands\RelayCommand.cs" />
-    <Compile Include="Models\Claim.cs" />
-    <Compile Include="Models\TypeOfTask.cs" />
+    <Compile Include="Models\Configurations\ClaimConfiguration.cs" />
+    <Compile Include="Models\Configurations\TypeOfTaskConfiguration.cs" />
+    <Compile Include="Models\Domains\Claim.cs" />
+    <Compile Include="Models\Domains\TypeOfTask.cs" />
+    <Compile Include="Models\Wrappers\ClaimWrapper.cs" />
+    <Compile Include="Models\Wrappers\TypeOfTaskWrapper.cs" />
     <Compile Include="ViewModels\AddEditClaimViewModel.cs" />
     <Compile Include="ViewModels\MainViewModel.cs" />
     <Compile Include="ViewModels\ViewModelBase.cs" />
@@ -131,6 +135,8 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Converters\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

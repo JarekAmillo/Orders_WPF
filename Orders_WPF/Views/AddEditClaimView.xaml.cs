@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Claims_WPF.Models;
+using Claims_WPF.Models.Wrappers;
 
 namespace Claims_WPF.Views
 {
@@ -22,7 +23,7 @@ namespace Claims_WPF.Views
     /// </summary>
     public partial class AddEditClaimView : MetroWindow
     {
-        public AddEditClaimView(Claim claim = null)
+        public AddEditClaimView(ClaimWrapper claim = null)
         {
             InitializeComponent();
             DataContext = new AddEditClaimViewModel(claim);

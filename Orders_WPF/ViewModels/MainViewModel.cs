@@ -1,8 +1,10 @@
 ﻿using Claims_WPF.Commands;
 using Claims_WPF.Models;
+using Claims_WPF.Models.Wrappers;
 using Claims_WPF.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
+using Orders_WPF;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -21,6 +23,13 @@ namespace Claims_WPF.ViewModels
         public MainViewModel()
         {
 
+            using (var context = new ApplicationDbContext())
+            {
+                var claims = context.Claims.ToList();
+            }
+
+
+
             AddTaskCommand = new RelayCommand(AddEditTask, null);
             EditTaskCommand = new RelayCommand(AddEditTask, CanEditDeleteClaim);
             DeleteTaskCommand = new AsyncRelayCommand(DeleteTask, CanEditDeleteClaim);
@@ -29,7 +38,6 @@ namespace Claims_WPF.ViewModels
             RefreshClaims();
             InitTypeOfTasks();
         }
-
 
 
         public ICommand AddTaskCommand { get; set; }
@@ -42,8 +50,8 @@ namespace Claims_WPF.ViewModels
         public ICommand RefreshClaimsCommand { get; set; }
 
 
-        private Claim _selectedClaim;
-        public Claim SelectedClaim
+        private ClaimWrapper _selectedClaim;
+        public ClaimWrapper SelectedClaim
         {
             get { return _selectedClaim; }
             set
@@ -54,8 +62,8 @@ namespace Claims_WPF.ViewModels
         }
 
 
-        private ObservableCollection<Claim> _claims;
-        public ObservableCollection<Claim> Claims
+        private ObservableCollection<ClaimWrapper> _claims;
+        public ObservableCollection<ClaimWrapper> Claims
         {
             get { return _claims; }
             set
@@ -76,8 +84,8 @@ namespace Claims_WPF.ViewModels
             }
         }
 
-        private ObservableCollection<TypeOfTask> _typeOfTasks;
-        public ObservableCollection<TypeOfTask> TypeOfTasks
+        private ObservableCollection<TypeOfTaskWrapper> _typeOfTasks;
+        public ObservableCollection<TypeOfTaskWrapper> TypeOfTasks
         {
             get { return _typeOfTasks; }
             set
@@ -100,13 +108,13 @@ namespace Claims_WPF.ViewModels
 
         private void InitTypeOfTasks()
         {
-            TypeOfTasks = new ObservableCollection<TypeOfTask>
+            TypeOfTasks = new ObservableCollection<TypeOfTaskWrapper>
             {
-            new TypeOfTask { Id = 0, Name = "Wszystkie"},
-            new TypeOfTask { Id = 1, Name = "Typ C"},
-            new TypeOfTask { Id = 2, Name = "Typ C1"},
-            new TypeOfTask { Id = 3, Name = "Typ C2"},
-            new TypeOfTask { Id = 4, Name = "Typ D2"}
+            new TypeOfTaskWrapper { Id = 0, Name = "Wszystkie"},
+            new TypeOfTaskWrapper { Id = 1, Name = "Typ C"},
+            new TypeOfTaskWrapper { Id = 2, Name = "Typ C1"},
+            new TypeOfTaskWrapper { Id = 3, Name = "Typ C2"},
+            new TypeOfTaskWrapper { Id = 4, Name = "Typ D2"}
             };
             SelectedTypeId = 0;
         }
@@ -130,16 +138,14 @@ namespace Claims_WPF.ViewModels
             {
                 return;
             }
-
             //usuwanie z bazy danych
 
             RefreshClaims();
-        
         }
 
         private void AddEditTask(object obj)
         {
-            var AddEditTaskWindow = new AddEditClaimView (obj as Claim);
+            var AddEditTaskWindow = new AddEditClaimView (obj as ClaimWrapper);
             AddEditTaskWindow.Closed += AddEditTaskWindow_Closed;
             AddEditTaskWindow.ShowDialog();
         }
@@ -151,27 +157,27 @@ namespace Claims_WPF.ViewModels
 
         private void RefreshClaims()
         {
-            Claims = new ObservableCollection<Claim>
+            Claims = new ObservableCollection<ClaimWrapper>
             {
-                new Claim
+                new ClaimWrapper
                 {
                     ClaimNumber = "KR20/5678/22",
                     TaskNumber = "C/123/2022",
-                    TypeOfTask = new TypeOfTask { Id = 1, Name = "C"}
+                    TypeOfTask = new TypeOfTaskWrapper { Id = 1, Name = "C"}
                 },
 
-                new Claim
+                new ClaimWrapper
                 {
                     ClaimNumber = "PO20/5678/22",
                     TaskNumber = "C/423/2022",
-                    TypeOfTask = new TypeOfTask { Id = 2, Name = "C"}
+                    TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C2"}
                 },
 
-                new Claim
+                new ClaimWrapper
                 {
                     ClaimNumber = "GD20/5678/22",
                     TaskNumber = "C/723/2022",
-                    TypeOfTask = new TypeOfTask { Id = 3, Name = "C"}
+                    TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C"}
                 },
             };
         }

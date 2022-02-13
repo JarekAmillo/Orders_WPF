@@ -47,15 +47,29 @@
                   Grid.Row="4" 
                   Grid.Column="1" 
                   Margin="5"
-                  ItemsSource="{Binding Groups}"
-                  SelectedValue="{Binding Claim.Group.Id}"
+                  ItemsSource="{Binding TypeOfTasks}"
+                  SelectedValue="{Binding Claim.TypeOfTask.Id}"
                   DisplayMemberPath="Name"
                   SelectedValuePath="Id"
                   />
 
+        
+        
+        
         <Label Grid.Row="5" Grid.Column="0" Content="Data otrzymania zlecenia" Margin="5"/>
-        <DatePicker Text="{Binding Claim.DateToRegisterTheClaim}"
-                    Grid.Row="5" Grid.Column="1" Margin="5"/>
+        <DatePicker  x:Name="datePicker"  
+                    Text="{Binding Claim.DateToRegisterTheClaim}"
+                    Grid.Row="5" 
+                    Grid.Column="1" 
+                    Margin="5" 
+                    FirstDayOfWeek="Monday" 
+                    DisplayDateStart="2022-01-01"/>
+
+
+
+
+
+
 
         <Label Grid.Row="6" Grid.Column="0" Content="Zapiski" Margin="5"/>
         <TextBox 
