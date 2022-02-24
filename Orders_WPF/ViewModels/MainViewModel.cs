@@ -5,6 +5,8 @@ using Claims_WPF.Views;
 using MahApps.Metro.Controls;
 using MahApps.Metro.Controls.Dialogs;
 using Orders_WPF;
+using Orders_WPF.Models.Domains;
+//using Orders_WPF.Models.Domains;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -20,13 +22,17 @@ namespace Claims_WPF.ViewModels
     class MainViewModel : ViewModelBase
     {
 
+        private Repository _repository = new Repository();
+
+
+
         public MainViewModel()
         {
-
-            using (var context = new ApplicationDbContext())
-            {
-                var claims = context.Claims.ToList();
-            }
+            //tworzenie bazy danych - Po jej utworzeniu, kasuję kod.
+            //using (var context = new ApplicationDbContext())
+            //{
+            //    var claims = context.Claims.ToList();
+            //}
 
 
 
@@ -62,6 +68,7 @@ namespace Claims_WPF.ViewModels
         }
 
 
+
         private ObservableCollection<ClaimWrapper> _claims;
         public ObservableCollection<ClaimWrapper> Claims
         {
@@ -84,8 +91,8 @@ namespace Claims_WPF.ViewModels
             }
         }
 
-        private ObservableCollection<TypeOfTaskWrapper> _typeOfTasks;
-        public ObservableCollection<TypeOfTaskWrapper> TypeOfTasks
+        private ObservableCollection<TypeOfTask> _typeOfTasks;
+        public ObservableCollection<TypeOfTask> TypeOfTasks
         {
             get { return _typeOfTasks; }
             set
@@ -108,14 +115,12 @@ namespace Claims_WPF.ViewModels
 
         private void InitTypeOfTasks()
         {
-            TypeOfTasks = new ObservableCollection<TypeOfTaskWrapper>
-            {
-            new TypeOfTaskWrapper { Id = 0, Name = "Wszystkie"},
-            new TypeOfTaskWrapper { Id = 1, Name = "Typ C"},
-            new TypeOfTaskWrapper { Id = 2, Name = "Typ C1"},
-            new TypeOfTaskWrapper { Id = 3, Name = "Typ C2"},
-            new TypeOfTaskWrapper { Id = 4, Name = "Typ D2"}
-            };
+            var typeOfTasks = _repository.GetTypeOfTasks();
+            typeOfTasks.Insert(0, new TypeOfTask { Id = 0, Name = "Wszystkie" });
+
+
+                TypeOfTasks = new ObservableCollection<TypeOfTask>(typeOfTasks);
+
             SelectedTypeId = 0;
         }
 
@@ -139,6 +144,9 @@ namespace Claims_WPF.ViewModels
                 return;
             }
             //usuwanie z bazy danych
+            _repository.DeleteClaim(SelectedClaim.Id);
+             
+
 
             RefreshClaims();
         }
@@ -155,31 +163,52 @@ namespace Claims_WPF.ViewModels
             RefreshClaims();
         }
 
+
+        //private void InitTypeOfTasks()
+        //{
+        //    var typeOfTasks = _repository.GetTypeOfTasks();
+        //    typeOfTasks.Insert(0, new TypeOfTask { Id = 0, Name = "Wszystkie" });
+
+        //    TypeOfTasks = new ObservableCollection<TypeOfTask>(typeOfTasks);
+
+        //    SelectedTypeId = 0;
+        //}
+
+
+
         private void RefreshClaims()
         {
-            Claims = new ObservableCollection<ClaimWrapper>
-            {
-                new ClaimWrapper
-                {
-                    ClaimNumber = "KR20/5678/22",
-                    TaskNumber = "C/123/2022",
-                    TypeOfTask = new TypeOfTaskWrapper { Id = 1, Name = "C"}
-                },
 
-                new ClaimWrapper
-                {
-                    ClaimNumber = "PO20/5678/22",
-                    TaskNumber = "C/423/2022",
-                    TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C2"}
-                },
+            //Claims = new ObservableCollection<ClaimWrapper>
+            //wcześniej dodałem na sztywno zlecenia,zanim skorzystałem z bazy.
+            //{
+            //    //new ClaimWrapper
+            //    new ClaimWrapper
+            //    {
+            //        ClaimNumber = "KR20/5678/22",
+            //        TaskNumber = "C/123/2022",
+            //        TypeOfTask = new TypeOfTaskWrapper { Id = 1, Name = "C"}
+            //    },
 
-                new ClaimWrapper
-                {
-                    ClaimNumber = "GD20/5678/22",
-                    TaskNumber = "C/723/2022",
-                    TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C"}
-                },
-            };
+            //    //new ClaimWrapper
+            //    new ClaimWrapper
+            //    {
+            //        ClaimNumber = "PO20/5678/22",
+            //        TaskNumber = "C/423/2022",
+            //        TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C2"}
+            //    },
+
+            //    //new ClaimWrapper
+            //    new ClaimWrapper
+            //    {
+            //        ClaimNumber = "GD20/5678/22",
+            //        TaskNumber = "C/723/2022",
+            //        TypeOfTask = new TypeOfTaskWrapper { Id = 2, Name = "C"}
+            //    },
+            //};
+
+            Claims = new ObservableCollection<ClaimWrapper>(_repository.GetClaims(SelectedTypeId));
+
         }
     }
 }

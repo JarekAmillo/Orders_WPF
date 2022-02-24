@@ -1,6 +1,8 @@
 ﻿using Claims_WPF.Commands;
 using Claims_WPF.Models;
 using Claims_WPF.Models.Wrappers;
+using Orders_WPF;
+using Orders_WPF.Models.Domains;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -14,6 +16,10 @@ namespace Claims_WPF.ViewModels
 {
     class AddEditClaimViewModel :ViewModelBase
     {
+
+        private Repository _repository = new Repository();
+
+
         public AddEditClaimViewModel(ClaimWrapper claim = null)
         {
             CloseCommand = new RelayCommand(Close, null);
@@ -71,8 +77,8 @@ namespace Claims_WPF.ViewModels
             }
         }
 
-        private ObservableCollection<TypeOfTaskWrapper> _typeOfTasks;
-        public ObservableCollection<TypeOfTaskWrapper> TypeOfTasks
+        private ObservableCollection<TypeOfTask> _typeOfTasks;
+        public ObservableCollection<TypeOfTask> TypeOfTasks
         {
             get { return _typeOfTasks; }
             set
@@ -84,6 +90,13 @@ namespace Claims_WPF.ViewModels
 
         private void Confirm(object obj)
         {
+            if (!Claim.IsValid)
+            {
+                return;
+            }
+            
+            
+            
             if (!IsUpdate)
             {
                 AddClaim();
@@ -100,11 +113,13 @@ namespace Claims_WPF.ViewModels
         private void UpdateClaim()
         {
             //baza danych
+            _repository.UpdateClaim(Claim);
         }
 
         private void AddClaim()
         {
             //baza danych
+            _repository.AddClaim(Claim);
         }
 
         private void Close(object obj)
@@ -118,17 +133,20 @@ namespace Claims_WPF.ViewModels
             window.Close();
         }
 
+
         private void InitTypeOfTasks()
         {
-            TypeOfTasks = new ObservableCollection<TypeOfTaskWrapper>
-            {
-            new TypeOfTaskWrapper { Id = 0, Name = "-- brak --"},
-            new TypeOfTaskWrapper { Id = 1, Name = "Typ C"},
-            new TypeOfTaskWrapper { Id = 2, Name = "Typ C1"},
-            new TypeOfTaskWrapper { Id = 3, Name = "Typ C2"},
-            new TypeOfTaskWrapper { Id = 4, Name = "Typ D2"}
-            };
-            SelectedTypeId = 0;
+            var typeOfTasks = _repository.GetTypeOfTasks();
+            typeOfTasks.Insert(0, new TypeOfTask { Id = 0, Name = "-- brak --" });
+
+
+            TypeOfTasks = new ObservableCollection<TypeOfTask>(typeOfTasks);
+
+            //SelectedTypeId = 0;
+            //ToString poniżej powinno działać a nie działa - sprawdzić
+            //Claim.TypeOfTask.Id = 0;
+
+            SelectedTypeId = Claim.TypeOfTask.Id;
         }
     }
 }

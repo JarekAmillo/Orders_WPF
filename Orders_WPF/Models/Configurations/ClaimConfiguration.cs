@@ -15,6 +15,14 @@ namespace Orders_WPF.Models.Configurations
             ToTable("dbo.Claims");
 
             HasKey(x => x.Id);
+
+            Property(x => x.ClaimNumber)
+                .HasMaxLength(12)
+                .IsRequired();
+
+            Property(x => x.TaskNumber)
+            .HasMaxLength(12)
+            .IsRequired();
         }
     }
 }

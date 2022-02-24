@@ -37,10 +37,10 @@
                  Margin="5"/>
 
         <Label Grid.Row="2" Grid.Column="0" Content="Nr Szkody" Margin="5"/>
-        <TextBox Text="{Binding Claim.ClaimNumber}" Grid.Row="2" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Claim.ClaimNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Row="2" Grid.Column="1" Margin="5"/>
 
         <Label Grid.Row="3" Grid.Column="0" Content="Nr Zlecenia" Margin="5"/>
-        <TextBox Text="{Binding Claim.TaskNumber}" Grid.Row="3" Grid.Column="1" Margin="5"/>
+        <TextBox Text="{Binding Claim.TaskNumber, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}" Grid.Row="3" Grid.Column="1" Margin="5"/>
 
         <Label Grid.Row="4" Grid.Column="0" Content="Typ zlecenia" Margin="5"/>
         <ComboBox 
@@ -48,7 +48,7 @@
                   Grid.Column="1" 
                   Margin="5"
                   ItemsSource="{Binding TypeOfTasks}"
-                  SelectedValue="{Binding Claim.TypeOfTask.Id}"
+                  SelectedValue="{Binding Claim.TypeOfTask.Id, UpdateSourceTrigger=PropertyChanged, ValidatesOnDataErrors=True}"
                   DisplayMemberPath="Name"
                   SelectedValuePath="Id"
                   />

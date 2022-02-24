@@ -17,7 +17,7 @@ namespace Orders_WPF.Models.Domains
         public int Id { get; set; }
         public string ClaimNumber { get; set; }
         public string TaskNumber { get; set; }
-        public int TaskId { get; set; }
+        public int TypeOfTaskId { get; set; }
 
 
         public TypeOfTask TypeOfTask { get; set; }
