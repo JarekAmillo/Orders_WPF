@@ -55,7 +55,7 @@
         
         <Label Grid.Row="5" Grid.Column="0" Content="Data otrzymania zlecenia" Margin="5"/>
         <DatePicker  x:Name="datePicker"  
-                    SelectedDate="{Binding Claim.DateToRegisterTheClaim}"
+                    Text="{Binding Claim.DateToRegisterTheClaim}"
                     Grid.Row="5" 
                     Grid.Column="1" 
                     Margin="5" 
